@@ -20,21 +20,22 @@
             display: inline-block;
             border: 2px solid #333;
             background-color: #fff;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
+            width: 320px; /* Container width for mobile */
         }
 
         #puzzle {
             display: grid;
-            grid-template-columns: repeat(4, 100px);
-            grid-template-rows: repeat(4, 100px);
+            grid-template-columns: repeat(4, 60px); /* Smaller puzzle pieces */
+            grid-template-rows: repeat(4, 60px);    /* Smaller puzzle pieces */
             gap: 2px;
         }
 
         .puzzle-piece {
-            width: 100px;
-            height: 100px;
-            background-size: 400px 400px;
+            width: 60px;  /* Smaller puzzle piece size */
+            height: 60px; /* Smaller puzzle piece size */
+            background-size: 240px 240px; /* Adjusted background size */
             cursor: pointer;
             border: 1px solid #ddd;
         }
@@ -45,19 +46,19 @@
         }
 
         #full-image {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         #full-image img {
-            width: 400px;
-            height: 400px;
+            width: 240px; /* Smaller reference image */
+            height: 240px; /* Smaller reference image */
             border: 2px solid #333;
         }
 
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
+            margin-top: 15px;
+            padding: 8px 16px;
+            font-size: 14px;
             cursor: pointer;
             background-color: #0074D9;
             color: white;
@@ -93,20 +94,20 @@
         // Puzzle image pieces
         let pieces = [
             { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: 0 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -100, y: 0 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -200, y: 0 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -300, y: 0 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: -100 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -100, y: -100 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -200, y: -100 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -300, y: -100 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: -200 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -100, y: -200 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -200, y: -200 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -300, y: -200 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: -300 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -100, y: -300 },
-            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -200, y: -300 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -60, y: 0 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -120, y: 0 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -180, y: 0 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: -60 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -60, y: -60 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -120, y: -60 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -180, y: -60 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: -120 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -60, y: -120 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -120, y: -120 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -180, y: -120 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: -180 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -60, y: -180 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -120, y: -180 },
             { background: '', x: 0, y: 0 } // Empty piece
         ];
 
