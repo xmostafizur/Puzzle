@@ -46,6 +46,14 @@
         .puzzle-piece.empty {
             background-color: #eee;
             border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .puzzle-piece.empty img {
+            width: 40px;
+            height: 40px;
         }
 
         #full-image {
@@ -130,6 +138,9 @@
                     div.style.backgroundPosition = `${piece.x}px ${piece.y}px`;
                 } else {
                     div.classList.add('empty');
+                    const img = document.createElement('img');
+                    img.src = 'https://i.postimg.cc/L8y3FKx7/12340328.png'; // Logo for empty piece
+                    div.appendChild(img);
                 }
                 div.dataset.index = index;
 
