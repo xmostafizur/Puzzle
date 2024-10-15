@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #001f3f; /* Dark Blue Background */
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: inline-block;
+            border: 2px solid #333;
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #puzzle {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(4, 100px);
+            gap: 2px;
+        }
+
+        .puzzle-piece {
+            width: 100px;
+            height: 100px;
+            background-size: 400px 400px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+
+        .puzzle-piece.empty {
+            background-color: #eee;
+            border: none;
+        }
+
+        #full-image {
+            margin-bottom: 20px;
+        }
+
+        #full-image img {
+            width: 400px;
+            height: 400px;
+            border: 2px solid #333;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #0074D9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Full Image for reference -->
+        <div id="full-image">
+            <img src="https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg" alt="Full Image">
+        </div>
+
+        <!-- Puzzle area -->
+        <div id="puzzle">
+            <!-- Puzzle pieces will be generated here -->
+        </div>
+
+        <!-- Reset Button -->
+        <button id="reset-button">Reset</button>
+    </div>
+
+    <script>
+        const puzzle = document.getElementById('puzzle');
+        const resetButton = document.getElementById('reset-button');
+
+        // Puzzle image pieces
+        let pieces = [
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: 0 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -100, y: 0 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -200, y: 0 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -300, y: 0 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: -100 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -100, y: -100 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -200, y: -100 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -300, y: -100 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: -200 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -100, y: -200 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -200, y: -200 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -300, y: -200 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: 0, y: -300 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -100, y: -300 },
+            { background: 'url("https://i.postimg.cc/YCMKvgfg/IMG-20240918-WA0007.jpg")', x: -200, y: -300 },
+            { background: '', x: 0, y: 0 } // Empty piece
+        ];
+
+        // Shuffle the pieces
+        function shufflePieces() {
+            pieces.sort(() => Math.random() - 0.5);
+        }
+
+        // Render the puzzle
+        function renderPuzzle() {
+            puzzle.innerHTML = '';
+            pieces.forEach((piece, index) => {
+                const div = document.createElement('div');
+                div.className = 'puzzle-piece';
+                if (piece.background) {
+                    div.style.backgroundImage = piece.background;
+                    div.style.backgroundPosition = `${piece.x}px ${piece.y}px`;
+                } else {
+                    div.classList.add('empty');
+                }
+                div.dataset.index = index;
+
+                // Add click and touch event listeners
+                div.addEventListener('click', movePiece);
+                div.addEventListener('touchstart', movePiece);
+
+                puzzle.appendChild(div);
+            });
+        }
+
+        // Move the pieces
+        function movePiece(e) {
+            // Prevent default behavior for touch events
+            e.preventDefault();
+
+            const index = parseInt(e.target.dataset.index);
+            const emptyIndex = pieces.findIndex(piece => piece.background === '');
+
+            // Check if the clicked piece is adjacent to the empty space
+            if ([index - 1, index + 1, index - 4, index + 4].includes(emptyIndex)) {
+                // Swap the clicked piece with the empty space
+                [pieces[index], pieces[emptyIndex]] = [pieces[emptyIndex], pieces[index]];
+                renderPuzzle();
+            }
+        }
+
+        // Reset the puzzle
+        resetButton.addEventListener('click', () => {
+            shufflePieces();
+            renderPuzzle();
+        });
+
+        // Initial shuffle and render
+        shufflePieces();
+        renderPuzzle();
+    </script>
+</body>
+</html>
